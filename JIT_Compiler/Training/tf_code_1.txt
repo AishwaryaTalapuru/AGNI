@@ -1,0 +1,4 @@
+a = tf.constant(5.0, name="a")
+b = tf.constant(3.0, name="b")
+c = tf.multiply(a, b, name="c")  # Multiplication
+d = tf.add(c, tf.constant(2.0), name="d")  # Addition
