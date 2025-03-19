@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-# Define the PPO Agent
+# Defining the PPO Agent
 class PPO:
     def __init__(self, state_dim, action_dim, lr=3e-4, gamma=0.99, clip_epsilon=0.2, batch_size=64, epochs=10):
         self.policy_net = PolicyNetwork(state_dim, action_dim)
@@ -44,7 +44,7 @@ class PPO:
         if len(self.memory) < self.batch_size:
             return
         
-        # Sample a batch from memory
+        # Sampling a batch from mem
         batch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, next_states, dones = zip(*batch)
         
@@ -54,36 +54,37 @@ class PPO:
         next_states = torch.FloatTensor(next_states)
         dones = torch.FloatTensor(dones)
         
-        # Compute returns and advantages
+        # Computing returns and advantages
         returns = self.compute_returns(rewards, dones)
         values = self.value_net(states)
         advantages = returns - values.detach()
         
-        # Train for multiple epochs
+        # Training for multiple epochs
         for _ in range(self.epochs):
-            # Compute new action probabilities and values
+            # Computing new action probabilities and values
             new_action_probs = self.policy_net(states)
             new_values = self.value_net(states)
             
-            # Compute the ratio of new and old action probabilities
+            # Computing the ratio of new and old action probabilities
             old_action_probs = new_action_probs.detach()
             ratio = new_action_probs.gather(1, actions.unsqueeze(1)) / old_action_probs.gather(1, actions.unsqueeze(1))
             
-            # Compute the clipped surrogate objective
+            # Computing the clipped surrogate objective
             surrogate1 = ratio * advantages
             surrogate2 = torch.clamp(ratio, 1 - self.clip_epsilon, 1 + self.clip_epsilon) * advantages
+            #surrogate2 = ratio
             policy_loss = -torch.min(surrogate1, surrogate2).mean()
             
-            # Compute the value loss
+            # Computing the value loss
             value_loss = F.mse_loss(new_values.squeeze(), returns)
             
-            # Compute entropy bonus (optional)
+            # Comput entropy bonus (optional)
             entropy = -(new_action_probs * torch.log(new_action_probs + 1e-10)).sum(dim=1).mean()
             
             # Total loss
             loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
             
-            # Update the networks
+            # Updating the networks
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
