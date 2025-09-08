@@ -1,0 +1,310 @@
+Concrete Computation graph (Keras model):
+node {
+  name: "x"
+  op: "Placeholder"
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: 16
+        }
+        dim {
+          size: 128
+        }
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_user_specified_name"
+    value {
+      s: "x"
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/Cast/ReadVariableOp/resource"
+  op: "Placeholder"
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_RESOURCE
+    }
+  }
+  attr {
+    key: "_user_specified_name"
+    value {
+      s: "resource"
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/Cast/ReadVariableOp"
+  op: "ReadVariableOp"
+  input: "sequential_1/dense_1/Cast/ReadVariableOp/resource"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/MatMul"
+  op: "MatMul"
+  input: "x"
+  input: "sequential_1/dense_1/Cast/ReadVariableOp"
+  attr {
+    key: "transpose_b"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "transpose_a"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "grad_b"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "grad_a"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/BiasAdd/ReadVariableOp/resource"
+  op: "Placeholder"
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_RESOURCE
+    }
+  }
+  attr {
+    key: "_user_specified_name"
+    value {
+      s: "resource"
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/BiasAdd/ReadVariableOp"
+  op: "ReadVariableOp"
+  input: "sequential_1/dense_1/BiasAdd/ReadVariableOp/resource"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/BiasAdd"
+  op: "BiasAdd"
+  input: "sequential_1/dense_1/MatMul"
+  input: "sequential_1/dense_1/BiasAdd/ReadVariableOp"
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1/Relu"
+  op: "Relu"
+  input: "sequential_1/dense_1/BiasAdd"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1_2/Cast/ReadVariableOp/resource"
+  op: "Placeholder"
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_RESOURCE
+    }
+  }
+  attr {
+    key: "_user_specified_name"
+    value {
+      s: "resource"
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1_2/Cast/ReadVariableOp"
+  op: "ReadVariableOp"
+  input: "sequential_1/dense_1_2/Cast/ReadVariableOp/resource"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1_2/MatMul"
+  op: "MatMul"
+  input: "sequential_1/dense_1/Relu"
+  input: "sequential_1/dense_1_2/Cast/ReadVariableOp"
+  attr {
+    key: "transpose_b"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "transpose_a"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "grad_b"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "grad_a"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1_2/BiasAdd/ReadVariableOp/resource"
+  op: "Placeholder"
+  attr {
+    key: "shape"
+    value {
+      shape {
+      }
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_RESOURCE
+    }
+  }
+  attr {
+    key: "_user_specified_name"
+    value {
+      s: "resource"
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1_2/BiasAdd/ReadVariableOp"
+  op: "ReadVariableOp"
+  input: "sequential_1/dense_1_2/BiasAdd/ReadVariableOp/resource"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "sequential_1/dense_1_2/BiasAdd"
+  op: "BiasAdd"
+  input: "sequential_1/dense_1_2/MatMul"
+  input: "sequential_1/dense_1_2/BiasAdd/ReadVariableOp"
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Identity"
+  op: "Identity"
+  input: "sequential_1/dense_1_2/BiasAdd"
+  input: "^NoOp"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "NoOp"
+  op: "NoOp"
+  input: "^sequential_1/dense_1/BiasAdd/ReadVariableOp"
+  input: "^sequential_1/dense_1/Cast/ReadVariableOp"
+  input: "^sequential_1/dense_1_2/BiasAdd/ReadVariableOp"
+  input: "^sequential_1/dense_1_2/Cast/ReadVariableOp"
+}
+versions {
+  producer: 2129
+}
+
+Output shape: (16, 10)
